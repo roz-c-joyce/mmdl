@@ -54,7 +54,7 @@ void my_main( int polygons ) {
 
   int i;
   double step;
-  double xval, yval, zval, xcor, ycor, zcor, andlge, radius;
+  double xval, yval, zval, xcor, ycor, zcor, angle, radius;
   struct matrix *transform;
   struct matrix *tmp;
   screen t;
@@ -76,7 +76,7 @@ void my_main( int polygons ) {
       printf("%s\n", "pop\n");
       break;
     case POP:
-      pop(origins);
+      pop(s);
       printf("%s\n", "pop\n");
       break;
     case MOVE:
@@ -92,7 +92,7 @@ void my_main( int polygons ) {
       xval = op[i].op.scale.d[0];
       yval = op[i].op.scale.d[1];
       zval = op[i].op.scale.d[2];
-      tmp = make_sca;e(xval, yval, zval);
+      tmp = make_scale(xval, yval, zval);
       matrix_mult(s->data[s->top], tmp);
       copy_matrix(tmp, s->data[s->top]);
       printf("%s\n", "scale\n");
@@ -102,7 +102,7 @@ void my_main( int polygons ) {
       if(op[i].op.rotate.axis == 0){
 	tmp = make_rotX(angle);
 	matrix_mult(s->data[s->top], tmp);
-	copy_matrix(tmp, s->data[s->s]);
+	copy_matrix(tmp, s->data[s->top]);
       }
       else if(op[i].op.rotate.axis == 1){
 	tmp = make_rotY(angle);
@@ -111,7 +111,7 @@ void my_main( int polygons ) {
       }
       else{
 	tmp = make_rotZ(angle);
-	matrix_mult(s->[origins->top], tmp);
+	matrix_mult(s->data[s->top], tmp);
 	copy_matrix(tmp, s->data[s->top]);
       }
       printf("%s\n", "rotate\n");
@@ -123,7 +123,7 @@ void my_main( int polygons ) {
       xcor = op[i].op.box.d0[0];
       ycor = op[i].op.box.d0[1];
       zcor = op[i].op.box.d0[2];
-      add_box(tmp, xval, yval, zval, vcor, ycor, zcor);
+      add_box(tmp, xval, yval, zval, xcor, ycor, zcor);
       matrix_mult(s->data[s->top], tmp);
       draw_polygons(tmp, t, g);
       printf("box\n");
